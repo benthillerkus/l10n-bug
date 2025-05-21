@@ -40,14 +40,14 @@ jobs:
         run: |
           rm pubspec.yaml
           mv pubspec.yaml.generate-false pubspec.yaml
-        if: matrix.explicit-dependencies == 'generate-false'
+        if: matrix.generate == 'generate-false'
         working-directory: packages/test
 
       - name: 'Set flutter: generate: true in subpackage pubspec.yaml'
         run: |
           rm pubspec.yaml
           mv pubspec.yaml.generate-true pubspec.yaml
-        if: matrix.explicit-dependencies == 'generate-true'
+        if: matrix.generate == 'generate-true'
         working-directory: packages/test
 
       - name: Install dependencies
