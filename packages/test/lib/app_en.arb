@@ -1,0 +1,6 @@
+{
+  "aString": "A string",
+  "@aString": {
+    "description": "Something."
+  }
+}
