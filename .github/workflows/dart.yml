@@ -17,7 +17,8 @@ jobs:
     strategy:
       matrix:
         version: ['3.29.3', '3.32.0']
-        explicit-dependencies: ['true', 'false']
+        explicit-dependencies: ['no-explicit', 'explicit-false', 'explicit-true']
+        generate: ['no-generate', 'generate-false', 'generate-true']
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +31,24 @@ jobs:
       - run: flutter --version
 
       - run: flutter config --explicit-package-dependencies
-        if: matrix.explicit-dependencies == 'true'
+        if: matrix.explicit-dependencies == 'explicit-true'
+
+      - run: flutter config --no-explicit-package-dependencies
+        if: matrix.explicit-dependencies == 'explicit-false'
+      
+      - name: 'Set flutter: generate: false in subpackage pubspec.yaml'
+        run: |
+          rm pubspec.yaml
+          mv pubspec.yaml.generate-false pubspec.yaml
+        if: matrix.explicit-dependencies == 'generate-false'
+        working-directory: packages/test
+
+      - name: 'Set flutter: generate: true in subpackage pubspec.yaml'
+        run: |
+          rm pubspec.yaml
+          mv pubspec.yaml.generate-true pubspec.yaml
+        if: matrix.explicit-dependencies == 'generate-true'
+        working-directory: packages/test
 
       - name: Install dependencies
         run: flutter pub get
