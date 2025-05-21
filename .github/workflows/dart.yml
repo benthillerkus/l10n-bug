@@ -28,6 +28,7 @@ jobs:
         with:
           channel: stable
           flutter-version: ${{matrix.version}}
+          cache: true
       - run: flutter --version
 
       - run: flutter config --explicit-package-dependencies
